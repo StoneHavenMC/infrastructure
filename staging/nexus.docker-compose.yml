@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+  nexus:
+    image: sonatype/nexus3:latest
+    volumes:
+      - grayroot_nexus:/nexus-data
+    networks:
+      - traefik-public
+    logging:
+      driver: json-file
+    deploy:
+      labels:
+        traefik.http.routers.grayroot-nexus.tls: 'true'
+        traefik.http.routers.grayroot-nexus.entrypoints: https
+        traefik.http.services.grayroot-nexus.loadbalancer.server.port: '8081'
+        traefik.http.routers.grayroot-nexus.tls.certresolver: cf
+        traefik.constraint-label: traefik-public
+        traefik.http.routers.grayroot-nexus.rule: Host(`$DOMAIN`)
+        traefik.docker.network: traefik-public
+        traefik.enable: 'true'
+      placement:
+        constraints:
+          - node.labels.grayroot-nexus.node == true
+networks:
+  traefik-public:
+    external: true
+volumes:
+  grayroot_nexus:
+    external: true

@@ -1,0 +1,49 @@
+version: '3.3'
+services:
+  grpc:
+    image: grayr0ot/sh-farmrun-item-service:dev
+    networks:
+      - traefik-public
+    secrets:
+      -
+        source: grpc_config
+        target: grpc_config.yml
+      -
+        source: spring_database_config
+        target: database_config.yml
+    logging:
+      driver: json-file
+    deploy:
+      labels:
+        traefik.http.routers.farmrun-item-service-http.tls.certresolver: cf
+        traefik.http.services.farmrun-item-service-grpc.loadbalancer.server.scheme: h2c
+        traefik.http.middlewares.farmrun-item-service-grpc.grpcweb.allowOrigins: '*'
+        traefik.http.routers.farmrun-item-service-http.service: farmrun-item-service-http
+        traefik.http.routers.farmrun-item-service-grpc.tls: 'true'
+        traefik.http.routers.farmrun-item-service-grpc.rule: Host(`$REST_DOMAIN`)
+        traefik.http.routers.farmrun-item-service-grpc.entrypoints: https
+        traefik.http.services.farmrun-item-service-http.loadbalancer.server.port: '8080'
+        traefik.http.routers.farmrun-item-service-http.tls: 'true'
+        traefik.http.services.farmrun-item-service-grpc.loadbalancer.server.port: '9090'
+        traefik.http.routers.farmrun-item-service-http.rule: Host(`$GRPC_DOMAIN`)
+        traefik.http.routers.farmrun-item-service-http.entrypoints: https
+        traefik.constraint-label: traefik-public
+        traefik.http.routers.farmrun-item-service-grpc.service: farmrun-item-service-grpc
+        traefik.docker.network: traefik-public
+        traefik.enable: 'true'
+        traefik.http.routers.farmrun-item-service-grpc.tls.certresolver: cf
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 512M
+        limits:
+          cpus: '2.0'
+          memory: 1024M
+networks:
+  traefik-public:
+    external: true
+secrets:
+  grpc_config:
+    external: true
+  spring_database_config:
+    external: true

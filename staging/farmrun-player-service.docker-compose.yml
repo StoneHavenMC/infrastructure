@@ -1,0 +1,42 @@
+version: '3.3'
+services:
+  grpc:
+    image: grayr0ot/sh-farmrun-player-service:dev
+    networks:
+      - traefik-public
+    secrets:
+      -
+        source: grpc_config
+        target: grpc_config.yml
+      -
+        source: spring_database_config
+        target: database_config.yml
+    logging:
+      driver: json-file
+    deploy:
+      labels:
+        traefik.http.routers.farmrun-player-service-grpc.entrypoints: https
+        traefik.http.middlewares.farmrun-player-service-grpc.grpcweb.allowOrigins: '*'
+        traefik.http.services.farmrun-player-service-grpc.loadbalancer.server.port: '9090'
+        traefik.http.routers.farmrun-player-service-grpc.tls: 'true'
+        traefik.http.routers.farmrun-player-service-grpc.tls.certresolver: cf
+        traefik.http.routers.farmrun-player-service-grpc.rule: Host(`$DOMAIN`)
+        traefik.constraint-label: traefik-public
+        traefik.docker.network: traefik-public
+        traefik.enable: 'true'
+        traefik.http.services.farmrun-player-service-grpc.loadbalancer.server.scheme: h2c
+      resources:
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+        limits:
+          cpus: '1.0'
+          memory: 512M
+networks:
+  traefik-public:
+    external: true
+secrets:
+  grpc_config:
+    external: true
+  spring_database_config:
+    external: true
