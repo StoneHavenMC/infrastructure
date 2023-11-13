@@ -1,0 +1,28 @@
+version: '3.3'
+services:
+  grafana:
+    image: grafana/grafana-oss
+    networks:
+      - traefik-public
+    volumes:
+      - grafana:/var/lib/grafana
+    logging:
+      driver: json-file
+    deploy:
+      labels:
+        traefik.http.routers.grafana.entrypoints: https
+        traefik.http.routers.grafana.tls.certresolver: cf
+        traefik.http.services.grafana.loadbalancer.server.port: '3000'
+        traefik.constraint-label: traefik-public
+        traefik.http.routers.grafana.rule: Host(`$DOMAIN`)
+        traefik.docker.network: traefik-public
+        traefik.enable: 'true'
+        traefik.http.routers.grafana.tls: 'true'
+      placement:
+        constraints:
+          - node.labels.grafana.node == true
+networks:
+  traefik-public:
+    external: true
+volumes:
+  grafana:

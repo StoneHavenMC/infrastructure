@@ -12,21 +12,13 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
     networks:
-      - default
+      - host
     secrets:
       - postgres_password
       - postgres_user
     logging:
       driver: json-file
     deploy:
-      labels:
-        traefik.tcp.services.database-postgres.loadbalancer.server.port: '5432'
-        traefik.tcp.routers.database-postgres.service: postgres
-        traefik.tcp.routers.database-postgres.entrypoints: postgres
-        traefik.constraint-label: traefik-public
-        traefik.tcp.routers.database-tcp.rule: HostSNI(`*`)
-        traefik.docker.network: traefik-public
-        traefik.enable: 'true'
       placement:
         constraints:
           - node.labels.database.node == true
@@ -37,11 +29,32 @@ services:
         limits:
           cpus: '4.0'
           memory: 8192M
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - prometheus:/etc/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --web.config.file=/etc/prometheus/web.yml
+  postgres-reporting:
+    image: bitnami/postgres-exporter
+    ports:
+      - 9187:9187
+    environment:
+      - DATA_SOURCE_URI=database-staging.stonehaven.fr/postgres?sslmode=disable
+      - DATA_SOURCE_USER_FILE=/run/secrets/postgres_user
+      - DATA_SOURCE_PASS_FILE=/run/secrets/postgres_password
+    secrets:
+      - postgres_password
+      - postgres_user
 networks:
-  default:
-    driver: overlay
+  host:
 volumes:
   postgres:
+    driver: local
+  prometheus:
     driver: local
 secrets:
   postgres_password:

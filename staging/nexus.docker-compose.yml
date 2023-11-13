@@ -1,26 +1,33 @@
 version: '3.3'
+
 services:
   nexus:
     image: sonatype/nexus3:latest
-    volumes:
-      - grayroot_nexus:/nexus-data
     networks:
       - traefik-public
+    volumes:
+      - grayroot_nexus:/nexus-data
+    environment:
+      - 'SONATYPE_DIR:/opt/sonatype'
+      - 'NEXUS_HOME:/opt/sonatype/nexus'
+      - 'NEXUS_DATA:/nexus-data'
+      - 'SONATYPE_WORK:/opt/sonatype/sonatype-work'
     logging:
       driver: json-file
     deploy:
       labels:
-        traefik.http.routers.grayroot-nexus.tls: 'true'
         traefik.http.routers.grayroot-nexus.entrypoints: https
-        traefik.http.services.grayroot-nexus.loadbalancer.server.port: '8081'
         traefik.http.routers.grayroot-nexus.tls.certresolver: cf
+        traefik.http.services.grayroot-nexus.loadbalancer.server.port: '8081'
         traefik.constraint-label: traefik-public
         traefik.http.routers.grayroot-nexus.rule: Host(`$DOMAIN`)
         traefik.docker.network: traefik-public
         traefik.enable: 'true'
+        traefik.http.routers.grayroot-nexus.tls: 'true'
       placement:
         constraints:
           - node.labels.grayroot-nexus.node == true
+
 networks:
   traefik-public:
     external: true

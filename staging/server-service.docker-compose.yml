@@ -2,8 +2,12 @@ version: '3.3'
 services:
   grpc:
     image: grayr0ot/sh-server-service:dev
+    ports:
+      - 9091:9090
     networks:
       - traefik-public
+      - minecraft_private
+    hostname: server-service
     secrets:
       -
         source: grpc_config
@@ -11,6 +15,7 @@ services:
     logging:
       driver: json-file
     deploy:
+      replicas: 1
       labels:
         traefik.http.routers.server-service-grpc.tls: 'true'
         traefik.http.services.server-service-grpc.loadbalancer.server.scheme: h2c
@@ -31,6 +36,8 @@ services:
           memory: 512M
 networks:
   traefik-public:
+    external: true
+  minecraft_private:
     external: true
 secrets:
   grpc_config:
