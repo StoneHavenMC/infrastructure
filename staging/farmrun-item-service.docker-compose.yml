@@ -2,30 +2,35 @@ version: '3.3'
 services:
   grpc:
     image: grayr0ot/sh-farmrun-item-service:dev
+    ports:
+      - 9094:9090
     networks:
       - traefik-public
+      - minecraft_private
+    hostname: farmrun-item-service
     secrets:
-      -
-        source: grpc_config
-        target: grpc_config.yml
       -
         source: spring_database_config
         target: database_config.yml
+      -
+        source: grpc_config
+        target: grpc_config.yml
     logging:
       driver: json-file
     deploy:
+      replicas: 1
       labels:
         traefik.http.routers.farmrun-item-service-http.tls.certresolver: cf
         traefik.http.services.farmrun-item-service-grpc.loadbalancer.server.scheme: h2c
         traefik.http.middlewares.farmrun-item-service-grpc.grpcweb.allowOrigins: '*'
         traefik.http.routers.farmrun-item-service-http.service: farmrun-item-service-http
         traefik.http.routers.farmrun-item-service-grpc.tls: 'true'
-        traefik.http.routers.farmrun-item-service-grpc.rule: Host(`$REST_DOMAIN`)
+        traefik.http.routers.farmrun-item-service-grpc.rule: Host(`farmrun-item-services-staging.stonehaven.fr`)
         traefik.http.routers.farmrun-item-service-grpc.entrypoints: https
         traefik.http.services.farmrun-item-service-http.loadbalancer.server.port: '8080'
         traefik.http.routers.farmrun-item-service-http.tls: 'true'
         traefik.http.services.farmrun-item-service-grpc.loadbalancer.server.port: '9090'
-        traefik.http.routers.farmrun-item-service-http.rule: Host(`$GRPC_DOMAIN`)
+        traefik.http.routers.farmrun-item-service-http.rule: Host(`$DOMAIN`)
         traefik.http.routers.farmrun-item-service-http.entrypoints: https
         traefik.constraint-label: traefik-public
         traefik.http.routers.farmrun-item-service-grpc.service: farmrun-item-service-grpc
@@ -42,8 +47,10 @@ services:
 networks:
   traefik-public:
     external: true
-secrets:
-  grpc_config:
+  minecraft_private:
     external: true
+secrets:
   spring_database_config:
+    external: true
+  grpc_config:
     external: true
