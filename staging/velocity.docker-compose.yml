@@ -1,0 +1,34 @@
+version: '3.3'
+
+services:
+  velocity:
+    image: itzg/bungeecord:latest
+    networks:
+      - default
+      - minecraft_private
+    ports:
+      - target: 25565
+        published: 50001
+        protocol: tcp
+        mode: host
+    environment:
+      - TYPE=VELOCITY
+      - UID=1000
+      - GID=1000
+      - MEMORY=512M
+      - TZ=Europe/Paris
+      - SERVER_PORT=25565
+      - GRPC_API_KEY=BFcEcSgDk9MbpEFqXAzMPcgQC4tg5zNhgsctgzcg
+      - HUB_SERVER_TYPE=hub
+    working_dir: /server
+    volumes:
+      - /home/stonehaven/servers/staging/staging_velocity:/server
+    logging:
+      driver: json-file
+    stdin_open: true
+    tty: true
+
+networks:
+  default:
+  minecraft_private:
+    external: true

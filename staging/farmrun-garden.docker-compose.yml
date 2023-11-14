@@ -1,0 +1,36 @@
+version: '3.3'
+
+services:
+  paper:
+    image: sh_staging_garden:latest
+    networks:
+      - default
+      - minecraft_private
+    environment:
+      - TYPE=PAPER
+      - VERSION=1.20.2
+      - EULA=true
+      - UID=1000
+      - GID=1000
+      - ENABLE_RCON=false
+      - MEMORY=1G
+      - TZ=Europe/Paris
+      - GRPC_API_KEY=BFcEcSgDk9MbpEFqXAzMPcgQC4tg5zNhgsctgzcg
+      - server_group=garden_group
+      - island_service_group=sh_staging_island
+      - garden_server_group=garden_group
+      - spawn_server_group=spawn_group
+      - mine_server_group=mine_group
+      - DISABLE_HEALTHCHECK=true
+    working_dir: /server
+    volumes:
+      - /home/stonehaven/servers/staging/staging_garden:/server
+    logging:
+      driver: json-file
+    stdin_open: true
+    tty: true
+
+networks:
+  default:
+  minecraft_private:
+    external: true
