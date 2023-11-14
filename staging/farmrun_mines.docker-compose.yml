@@ -16,7 +16,11 @@ services:
       - MEMORY=1G
       - TZ=Europe/Paris
       - GRPC_API_KEY=BFcEcSgDk9MbpEFqXAzMPcgQC4tg5zNhgsctgzcg
-      - server_group=hub
+      - server_group=mine_group
+      - island_service_group=sh_staging_island
+      - garden_server_group=garden_group
+      - spawn_server_group=spawn_group
+      - mine_server_group=mine_group
       - DISABLE_HEALTHCHECK=true
     working_dir: /data
     volumes:
