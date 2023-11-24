@@ -18,6 +18,8 @@ services:
       - --api
     environment:
       CF_DNS_API_TOKEN_FILE: /run/secrets/traefik_cf-dns-api-token
+      TRAEFIK_PASSWORD_HASH: /run/secrets/traefik_password_hash
+      TRAEFIK_USER: admin
     ports:
       - 80:80
       - 443:443
@@ -28,6 +30,7 @@ services:
       - traefik-public
     secrets:
       - traefik_cf-dns-api-token
+      - traefik_password_hash
     logging:
       driver: json-file
     deploy:
@@ -59,4 +62,6 @@ volumes:
     driver: local
 secrets:
   traefik_cf-dns-api-token:
+    external: true
+  traefik_password_hash:
     external: true
