@@ -20,7 +20,6 @@ services:
       CF_DNS_API_TOKEN_FILE: /run/secrets/traefik_cf-dns-api-token
       TRAEFIK_PASSWORD_HASH: /run/secrets/traefik_password_hash
       TRAEFIK_USER: admin
-      DOMAIN: traefik-staging.stonehaven.fr
     ports:
       - 80:80
       - 443:443
@@ -38,7 +37,7 @@ services:
       labels:
         traefik.http.middlewares.https-redirect.redirectscheme.scheme: https
         traefik.http.middlewares.admin-auth.basicauth.users: $TRAEFIK_USER:$TRAEFIK_PASSWORD_HASH
-        traefik.http.routers.traefik-public-https.rule: Host(`$DOMAIN`)
+        traefik.http.routers.traefik-public-https.rule: Host(`traefik-staging.stonehaven.fr`)
         traefik.http.routers.traefik-public-https.tls: 'true'
         traefik.http.services.traefik-public.loadbalancer.server.port: '8080'
         traefik.http.routers.traefik-public-https.service: api@internal
@@ -47,7 +46,7 @@ services:
         traefik.http.routers.traefik-public-https.entrypoints: https
         traefik.http.middlewares.https-redirect.redirectscheme.permanent: 'true'
         traefik.constraint-label: traefik-public
-        traefik.http.routers.traefik-public-http.rule: Host(`$DOMAIN`)
+        traefik.http.routers.traefik-public-http.rule: Host(`traefik-staging.stonehaven.fr`)
         traefik.http.routers.traefik-public-https.middlewares: admin-auth
         traefik.docker.network: traefik-public
         traefik.enable: 'true'
