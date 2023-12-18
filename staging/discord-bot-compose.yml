@@ -1,0 +1,26 @@
+version: '3.3'
+services:
+  spring:
+    image: grayr0ot/sh-discord-bot:dev
+    hostname: discord-bot
+    secrets:
+     - DISCORD_BOT_TOKEN
+     - GITBOOK_API_TOKEN
+    environment:
+      DISCORD_BOT_TOKEN: /run/secrets/DISCORD_BOT_TOKEN
+      GITBOOK_API_TOKEN: /run/secrets/GITBOOK_API_TOKEN
+    logging:
+      driver: json-file
+    deploy:
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 512M
+        limits:
+          cpus: '2.0'
+          memory: 1024M
+secrets:
+  DISCORD_BOT_TOKEN:
+    external: true
+  GITBOOK_API_TOKEN:
+    external: true
