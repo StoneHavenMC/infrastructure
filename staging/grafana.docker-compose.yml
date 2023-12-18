@@ -8,6 +8,9 @@ services:
       - grafana:/var/lib/grafana
     logging:
       driver: json-file
+    environment:
+      - GF_SERVER_ROOT_URL=https://$DOMAIN
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
     deploy:
       labels:
         traefik.http.routers.grafana.entrypoints: https
@@ -20,7 +23,7 @@ services:
         traefik.http.routers.grafana.tls: 'true'
       placement:
         constraints:
-          - node.labels.grafana.node == true
+         - node.labels.grafana.node == true
 networks:
   traefik-public:
     external: true
