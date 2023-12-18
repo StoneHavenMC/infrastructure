@@ -1,0 +1,33 @@
+version: '3.3'
+services:
+  spring:
+    image: grayr0ot/sh-api-gateway:dev
+    hostname: api-gateway
+    networks:
+      traefik-public:
+      eureka_private:
+    logging:
+      driver: json-file
+    deploy:
+      replicas: 1
+      labels:
+        traefik.http.routers.api-gateway-http.tls.certresolver: cf
+        traefik.http.services.api-gateway-http.loadbalancer.server.port: '8080'
+        traefik.http.routers.api-gateway-http.tls: 'true'
+        traefik.http.routers.api-gateway-http.rule: Host(`$DOMAIN`)
+        traefik.http.routers.api-gateway-http.entrypoints: https
+        traefik.constraint-label: traefik-public
+        traefik.docker.network: traefik-public
+        traefik.enable: 'true'
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 512M
+        limits:
+          cpus: '2.0'
+          memory: 1024M
+networks:
+  traefik-public:
+    external: true
+  eureka_private:
+    external: true
