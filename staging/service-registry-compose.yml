@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  spring:
+    image: grayr0ot/sh-service-registry:dev
+    hostname: service-registry
+    networks:
+      eureka_private:
+    logging:
+      driver: json-file
+    deploy:
+      replicas: 1
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 512M
+        limits:
+          cpus: '2.0'
+          memory: 1024M
+networks:
+  eureka_private:
+    external: true
