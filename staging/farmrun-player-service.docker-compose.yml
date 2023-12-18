@@ -4,17 +4,18 @@ services:
     image: grayr0ot/sh-farmrun-player-service:dev
     ports:
       - 9093:9090
-    networks:
-      - traefik-public
-      - minecraft_private
     hostname: farmrun-player-service
+    networks:
+       - traefik-public
+       - minecraft_private
+       - eureka_private
     secrets:
-      -
-        source: spring_database_config
-        target: database_config.yml
-      -
-        source: grpc_config
-        target: grpc_config.yml
+     -
+      source: spring_database_config
+      target: database_config.yml
+     -
+      source: grpc_config
+      target: grpc_config.yml
     logging:
       driver: json-file
     deploy:
@@ -37,11 +38,15 @@ services:
         limits:
           cpus: '1.0'
           memory: 512M
+
 networks:
   traefik-public:
     external: true
   minecraft_private:
     external: true
+  eureka_private:
+    external: true
+
 secrets:
   spring_database_config:
     external: true
