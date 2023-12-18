@@ -7,14 +7,15 @@ services:
     networks:
       - traefik-public
       - minecraft_private
+      - eureka_private
     hostname: farmrun-item-service
     secrets:
-      -
-        source: spring_database_config
-        target: database_config.yml
-      -
-        source: grpc_config
-        target: grpc_config.yml
+     -
+      source: spring_database_config
+      target: database_config.yml
+     -
+      source: grpc_config
+      target: grpc_config.yml
     logging:
       driver: json-file
     deploy:
@@ -48,6 +49,8 @@ networks:
   traefik-public:
     external: true
   minecraft_private:
+    external: true
+  eureka_private:
     external: true
 secrets:
   spring_database_config:
