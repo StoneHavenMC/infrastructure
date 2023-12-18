@@ -1,0 +1,38 @@
+version: '3.3'
+services:
+  spring:
+    image: grayr0ot/sh-authentication-service:dev
+    hostname: authentication-service
+    networks:
+      default:
+      eureka_private:
+    secrets:
+     - jwt-public-key
+     - jwt-private-key
+     -
+      source: spring_database_config
+      target: database_config.yml
+    logging:
+      driver: json-file
+    deploy:
+      replicas: 1
+      resources:
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+        limits:
+          cpus: '1.0'
+          memory: 1024M
+
+secrets:
+  spring_database_config:
+    external: true
+  jwt-public-key:
+    external: true
+  jwt-private-key:
+    external: true
+
+networks:
+  default:
+  eureka_private:
+    external: true
