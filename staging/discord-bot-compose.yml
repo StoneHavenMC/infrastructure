@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   spring:
-    image: grayr0ot/sh-discord-bot:dev
+    image: ghcr.io/grayr0ot/sh-discord-bot:dev
     hostname: discord-bot
     secrets:
      - DISCORD_BOT_TOKEN
