@@ -18,7 +18,7 @@ services:
       - MEMORY=512M
       - TZ=Europe/Paris
       - SERVER_PORT=25565
-      - GRPC_API_KEY=BFcEcSgDk9MbpEFqXAzMPcgQC4tg5zNhgsctgzcg
+      - GRPC_API_KEY=$GRPC_API_KEY
       - HUB_SERVER_TYPE=hub
     working_dir: /server
     volumes:
