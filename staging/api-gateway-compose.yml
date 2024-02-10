@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   spring:
-    image: grayr0ot/sh-api-gateway:dev
+    image: ghcr.io/grayr0ot/sh-api-gateway:dev
     hostname: api-gateway
     networks:
       traefik-public:
