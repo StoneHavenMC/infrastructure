@@ -4,11 +4,11 @@ services:
     image: ghcr.io/grayr0ot/sh-discord-bot:dev
     hostname: discord-bot
     secrets:
-     - DISCORD_BOT_TOKEN
-     - GITBOOK_API_TOKEN
+     - discord_bot_token
+     - gitbook_api_token
     environment:
-      DISCORD_BOT_TOKEN: /run/secrets/DISCORD_BOT_TOKEN
-      GITBOOK_API_TOKEN: /run/secrets/GITBOOK_API_TOKEN
+      DISCORD_BOT_TOKEN: /run/secrets/discord_bot_token
+      GITBOOK_API_TOKEN: /run/secrets/gitbook_api_token
     logging:
       driver: json-file
     deploy:
@@ -20,7 +20,7 @@ services:
           cpus: '2.0'
           memory: 1024M
 secrets:
-  DISCORD_BOT_TOKEN:
+  discord_bot_token:
     external: true
-  GITBOOK_API_TOKEN:
+  gitbook_api_token:
     external: true
