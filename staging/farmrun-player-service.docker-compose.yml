@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   grpc:
-    image: grayr0ot/sh-farmrun-player-service:dev
+    image: ghcr.io/grayr0ot/sh-farmrun-player-service:dev
     ports:
       - 9093:9090
     hostname: farmrun-player-service
