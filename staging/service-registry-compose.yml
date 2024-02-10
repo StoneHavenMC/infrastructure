@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   spring:
-    image: grayr0ot/sh-service-registry:dev
+    image: ghcr.io/grayr0ot/sh-service-registry:dev
     hostname: service-registry
     networks:
       eureka_private:
