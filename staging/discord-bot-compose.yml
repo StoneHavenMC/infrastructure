@@ -3,12 +3,9 @@ services:
   spring:
     image: ghcr.io/grayr0ot/sh-discord-bot:dev
     hostname: discord-bot
-    secrets:
-     - discord_bot_token
-     - gitbook_api_token
     environment:
-      DISCORD_BOT_TOKEN: /run/secrets/discord_bot_token
-      GITBOOK_API_TOKEN: /run/secrets/gitbook_api_token
+      DISCORD_BOT_TOKEN: $DISCORD_BOT_TOKEN
+      GITBOOK_API_TOKEN: $GITBOOK_API_TOKEN
     logging:
       driver: json-file
     deploy:
@@ -19,8 +16,3 @@ services:
         limits:
           cpus: '2.0'
           memory: 1024M
-secrets:
-  discord_bot_token:
-    external: true
-  gitbook_api_token:
-    external: true
