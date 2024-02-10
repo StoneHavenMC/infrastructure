@@ -5,7 +5,7 @@ services:
     networks:
       - traefik-public
     volumes:
-      - grafana:/var/lib/grafana
+      - stonehaven_grafana:/var/lib/grafana
     logging:
       driver: json-file
     environment:
@@ -28,4 +28,4 @@ networks:
   traefik-public:
     external: true
 volumes:
-  grafana:
+  stonehaven_grafana:
