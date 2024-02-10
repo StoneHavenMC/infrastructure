@@ -15,7 +15,7 @@ services:
       - ENABLE_RCON=false
       - MEMORY=1G
       - TZ=Europe/Paris
-      - GRPC_API_KEY=BFcEcSgDk9MbpEFqXAzMPcgQC4tg5zNhgsctgzcg
+      - GRPC_API_KEY=$GRPC_API_KEY
       - server_group=hub
       - DISABLE_HEALTHCHECK=true
     working_dir: /data
