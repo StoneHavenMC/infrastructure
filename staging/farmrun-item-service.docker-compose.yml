@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   grpc:
-    image: grayr0ot/sh-farmrun-item-service:dev
+    image: ghcr.io/grayr0ot/sh-farmrun-item-service:dev
     ports:
       - 9094:9090
     networks:
