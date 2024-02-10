@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   spring:
-    image: grayr0ot/sh-authentication-service:dev
+    image: ghcr.io/grayr0ot/sh-authentication-service:dev
     hostname: authentication-service
     networks:
       default:
