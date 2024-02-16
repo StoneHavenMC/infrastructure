@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   paper:
-    image: sh_staging_garden:latest
+    image: ghcr.io/grayr0ot/sh_staging_garden:latest
     networks:
       - default
       - minecraft_private
