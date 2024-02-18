@@ -29,6 +29,29 @@ services:
         limits:
           cpus: '4.0'
           memory: 8192M
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb:/data/db
+    networks:
+      - host
+    secrets:
+      - mongodb_password
+    logging:
+      driver: json-file
+    deploy:
+      placement:
+        constraints:
+          - node.labels.database.node == true
+      resources:
+        reservations:
+          cpus: '2.0'
+          memory: 4096M
+        limits:
+          cpus: '4.0'
+          memory: 8192M
   prometheus:
     image: prom/prometheus
     ports:
@@ -54,10 +77,14 @@ networks:
 volumes:
   postgres:
     driver: local
+  mongodb:
+    driver: local
   prometheus:
     driver: local
 secrets:
   postgres_password:
     external: true
   postgres_user:
+    external: true
+  mongodb_password:
     external: true
