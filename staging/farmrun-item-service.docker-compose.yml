@@ -11,8 +11,8 @@ services:
     hostname: farmrun-item-service
     secrets:
      -
-      source: spring_database_config
-      target: database_config.yml
+      source: mongo_database_config.yml
+      target: mongo_database_config.yml
      -
       source: grpc_config
       target: grpc_config.yml
@@ -53,7 +53,7 @@ networks:
   eureka_private:
     external: true
 secrets:
-  spring_database_config:
+  mongo_database_config.yml:
     external: true
   grpc_config:
     external: true
