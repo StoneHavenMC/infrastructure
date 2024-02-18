@@ -31,6 +31,9 @@ services:
           memory: 8192M
   mongodb:
     image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/mongodb_password
     ports:
       - 27017:27017
     volumes:
