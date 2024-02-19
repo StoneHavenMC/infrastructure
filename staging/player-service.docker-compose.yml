@@ -10,8 +10,8 @@ services:
     hostname: player-service
     secrets:
       -
-      source: mongo_database_config.yml
-      target: mongo_database_config.yml
+        source: mongo_database_config.yml
+        target: mongo_database_config.yml
       -
         source: grpc_config
         target: grpc_config.yml
