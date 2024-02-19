@@ -10,11 +10,11 @@ services:
     hostname: player-service
     secrets:
       -
+      source: mongo_database_config.yml
+      target: mongo_database_config.yml
+      -
         source: grpc_config
         target: grpc_config.yml
-      -
-        source: spring_database_config
-        target: database_config.yml
     logging:
       driver: json-file
     deploy:
@@ -43,7 +43,7 @@ networks:
   minecraft_private:
     external: true
 secrets:
-  grpc_config:
+  mongo_database_config.yml:
     external: true
-  spring_database_config:
+  grpc_config:
     external: true
