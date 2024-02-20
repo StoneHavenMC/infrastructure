@@ -48,7 +48,7 @@ networks:
     external: true
 
 secrets:
-  mongo_database_config:
+  mongo_database_config.yml:
     external: true
   grpc_config:
     external: true
