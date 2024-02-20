@@ -11,8 +11,8 @@ services:
        - eureka_private
     secrets:
      -
-      source: spring_database_config
-      target: database_config.yml
+      source: mongo_database_config.yml
+      target: mongo_database_config.yml
      -
       source: grpc_config
       target: grpc_config.yml
@@ -48,7 +48,7 @@ networks:
     external: true
 
 secrets:
-  spring_database_config:
+  mongo_database_config:
     external: true
   grpc_config:
     external: true
