@@ -21,16 +21,23 @@ services:
     deploy:
       replicas: 1
       labels:
-        traefik.http.routers.farmrun-player-service-grpc.entrypoints: https
+        traefik.http.routers.farmrun-player-service-http.tls.certresolver: cf
+        traefik.http.services.farmrun-player-service-grpc.loadbalancer.server.scheme: h2c
         traefik.http.middlewares.farmrun-player-service-grpc.grpcweb.allowOrigins: '*'
-        traefik.http.services.farmrun-player-service-grpc.loadbalancer.server.port: '9090'
+        traefik.http.routers.farmrun-player-service-http.service: farmrun-player-service-http
         traefik.http.routers.farmrun-player-service-grpc.tls: 'true'
-        traefik.http.routers.farmrun-player-service-grpc.tls.certresolver: cf
-        traefik.http.routers.farmrun-player-service-grpc.rule: Host(`$DOMAIN`)
+        traefik.http.routers.farmrun-player-service-grpc.rule: Host(`farmrun-player-services-staging.stonehaven.fr`)
+        traefik.http.routers.farmrun-player-service-grpc.entrypoints: https
+        traefik.http.services.farmrun-player-service-http.loadbalancer.server.port: '8080'
+        traefik.http.routers.farmrun-player-service-http.tls: 'true'
+        traefik.http.services.farmrun-player-service-grpc.loadbalancer.server.port: '9090'
+        traefik.http.routers.farmrun-player-service-http.rule: Host(`farmrun-player-service-staging.stonehaven.fr`)
+        traefik.http.routers.farmrun-player-service-http.entrypoints: https
         traefik.constraint-label: traefik-public
+        traefik.http.routers.farmrun-player-service-grpc.service: farmrun-player-service-grpc
         traefik.docker.network: traefik-public
         traefik.enable: 'true'
-        traefik.http.services.farmrun-player-service-grpc.loadbalancer.server.scheme: h2c
+        traefik.http.routers.farmrun-player-service-grpc.tls.certresolver: cf
       resources:
         reservations:
           cpus: '0.5'
