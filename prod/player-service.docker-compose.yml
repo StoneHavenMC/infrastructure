@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   grpc:
-    image: ghcr.io/grayr0ot/sh-farmrun-player-service:prod
+    image: ghcr.io/grayr0ot/player-service:prod
     hostname: player-service
     networks:
        - default
