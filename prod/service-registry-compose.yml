@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  spring:
+    image: ghcr.io/grayr0ot/sh-service-registry:prod
+    hostname: service-registry
+    networks:
+      sh_prod-eureka-private:
+    logging:
+      driver: json-file
+    deploy:
+      replicas: 1
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+        limits:
+          cpus: '0.5'
+          memory: 1024M
+networks:
+  sh_prod-eureka-private:
+    external: true
