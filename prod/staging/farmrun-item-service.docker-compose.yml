@@ -3,7 +3,6 @@ services:
   grpc:
     image: ghcr.io/grayr0ot/sh-farmrun-item-service:prod
     networks:
-      - traefik-public
       - minecraft_private
       - eureka_private
     hostname: farmrun-item-service
@@ -18,15 +17,6 @@ services:
       driver: json-file
     deploy:
       replicas: 1
-      labels:
-        traefik.http.routers.sh_prod-farmrun-item-service-http.tls.certresolver: cf
-        traefik.http.services.sh_prod-farmrun-item-service-http.loadbalancer.server.port: '8080'
-        traefik.http.routers.sh_prod-farmrun-item-service-http.tls: 'true'
-        traefik.http.routers.sh_prod-farmrun-item-service-http.rule: Host(`$DOMAIN`)
-        traefik.http.routers.sh_prod-farmrun-item-service-http.entrypoints: https
-        traefik.constraint-label: traefik-public
-        traefik.docker.network: traefik-public
-        traefik.enable: 'true'
       resources:
         reservations:
           cpus: '1.0'
@@ -35,8 +25,6 @@ services:
           cpus: '2.0'
           memory: 1024M
 networks:
-  traefik-public:
-    external: true
   sh_prod-minecraft-private:
     external: true
   sh_prod-eureka-private:
