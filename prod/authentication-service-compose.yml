@@ -1,0 +1,42 @@
+version: '3.3'
+services:
+  spring:
+    image: ghcr.io/grayr0ot/sh-authentication-service:prod
+    hostname: authentication-service
+    networks:
+      default:
+      eureka_private:
+    secrets:
+     -
+       source: jsh_prod-jwt-public-key
+       target: jwt-public-key
+     - 
+       source: sh_prod-jwt-private-key
+       target: jwt-private-key
+     -
+      source: sh_prod-mongo-database-config.yml
+      target: mongo_database_config.yml
+    logging:
+      driver: json-file
+    deploy:
+      replicas: 1
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+        limits:
+          cpus: '0.5'
+          memory: 1024M
+
+secrets:
+  sh_prod-mongo-database-config.yml:
+    external: true
+  sh_prod-jwt-public-key:
+    external: true
+  sh_prod-jwt-private-key:
+    external: true
+
+networks:
+  default:
+  sh_prod-eureka-private:
+    external: true
