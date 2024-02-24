@@ -8,10 +8,10 @@ services:
     hostname: farmrun-item-service
     secrets:
      -
-      source: mongo_database_config.yml
+      source: sh_prod-mongo-database-config.yml
       target: mongo_database_config.yml
      -
-      source: grpc_config
+      source: sh_prod-mongo-database-config.yml
       target: grpc_config.yml
     logging:
       driver: json-file
@@ -32,5 +32,5 @@ networks:
 secrets:
   sh_prod-mongo-database-config.yml:
     external: true
-  sh_prod-grpc-config:
+  sh_prod-mongo-database-config.yml:
     external: true
