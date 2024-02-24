@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+  grpc:
+    image: ghcr.io/grayr0ot/sh-server-service:prod
+    networks:
+      - sh_prod-minecraft-private
+    hostname: server-service
+    secrets:
+      -
+        source: sh_prod-grpc-config.yml
+        target: grpc_config.yml
+    logging:
+      driver: json-file
+    deploy:
+      replicas: 1
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+        limits:
+          cpus: '0.5'
+          memory: 512M
+networks:
+  default:
+  sh_prod-minecraft-private:
+    external: true
+secrets:
+  sh_prod-grpc-config.yml:
+    external: true
