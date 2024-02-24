@@ -5,7 +5,7 @@ services:
     hostname: authentication-service
     networks:
       default:
-      eureka_private:
+      sh_prod-eureka-private:
     secrets:
      -
        source: sh_prod-jwt-public-key
