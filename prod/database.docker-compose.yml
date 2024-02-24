@@ -1,0 +1,94 @@
+version: '3.3'
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: stonehaven_prod
+      POSTGRES_PASSWORD_FILE: /run/secrets/sh_prod-postgres-password
+      POSTGRES_USER_FILE: /run/secrets/sh_prod-postgres-user
+    ports:
+      - 55432:5432
+    command: postgres -c 'max_connections=200'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - host
+    secrets:
+      - sh_prod-postgres-password
+      - sh_prod-postgres-user
+    logging:
+      driver: json-file
+    deploy:
+      placement:
+        constraints:
+          - node.labels.database.node == true
+      resources:
+        reservations:
+          cpus: '2.0'
+          memory: 4096M
+        limits:
+          cpus: '4.0'
+          memory: 8192M
+  mongodb:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/sh_prod-mongodb-password
+      MONGO_INITDB_DATABASE: prod
+    ports:
+      - 57017:27017
+    volumes:
+      - mongodb:/data/db
+    networks:
+      - host
+    secrets:
+      - sh_prod-mongodb-password
+    logging:
+      driver: json-file
+    deploy:
+      placement:
+        constraints:
+          - node.labels.database.node == true
+      resources:
+        reservations:
+          cpus: '2.0'
+          memory: 4096M
+        limits:
+          cpus: '4.0'
+          memory: 8192M
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 59090:9090
+    volumes:
+      - prometheus:/etc/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --web.config.file=/etc/prometheus/web.yml
+  postgres-reporting:
+    image: bitnami/postgres-exporter
+    ports:
+      - 59187:9187
+    environment:
+      - DATA_SOURCE_URI=database-prod.stonehaven.fr/postgres?sslmode=disable
+      - DATA_SOURCE_USER_FILE=/run/secrets/sh_prod-postgres-user
+      - DATA_SOURCE_PASS_FILE=/run/secrets/sh_prod-postgres-password
+    secrets:
+      - sh_prod-postgres-password
+      - sh_prod-postgres-user
+networks:
+  host:
+volumes:
+  postgres:
+    driver: local
+  mongodb:
+    driver: local
+  prometheus:
+    driver: local
+secrets:
+  sh_prod-postgres-password:
+    external: true
+  sh_prod-postgres-user:
+    external: true
+  sh_prod-mongodb-password:
+    external: true
