@@ -5,7 +5,7 @@ services:
     hostname: api-gateway
     networks:
       traefik-public:
-      sh_prod-eureka_private:
+      sh_prod-eureka-private:
     logging:
       driver: json-file
     deploy:
@@ -29,5 +29,5 @@ services:
 networks:
   traefik-public:
     external: true
-  sh_prod-eureka_private:
+  sh_prod-eureka-private:
     external: true
