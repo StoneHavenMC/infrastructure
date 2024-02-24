@@ -3,6 +3,7 @@ services:
   grpc:
     image: ghcr.io/grayr0ot/sh-farmrun-item-service:prod
     networks:
+      - default
       - sh_prod-minecraft-private
       - sh_prod-eureka-private
     hostname: farmrun-item-service
@@ -25,6 +26,7 @@ services:
           cpus: '0.5'
           memory: 1024M
 networks:
+  default:
   sh_prod-minecraft-private:
     external: true
   sh_prod-eureka-private:
