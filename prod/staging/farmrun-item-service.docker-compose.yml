@@ -3,8 +3,8 @@ services:
   grpc:
     image: ghcr.io/grayr0ot/sh-farmrun-item-service:prod
     networks:
-      - minecraft_private
-      - eureka_private
+      - sh_prod-minecraft-private
+      - sh_prod-eureka-private
     hostname: farmrun-item-service
     secrets:
      -
