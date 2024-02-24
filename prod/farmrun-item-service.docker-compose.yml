@@ -2,11 +2,11 @@ version: '3.3'
 services:
   grpc:
     image: ghcr.io/grayr0ot/sh-farmrun-item-service:prod
+    hostname: farmrun-item-service
     networks:
       - default
       - sh_prod-minecraft-private
       - sh_prod-eureka-private
-    hostname: farmrun-item-service
     secrets:
      -
       source: sh_prod-mongo-database-config.yml
