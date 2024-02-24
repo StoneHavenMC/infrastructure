@@ -2,7 +2,7 @@ version: '3.3'
 services:
   grpc:
     image: ghcr.io/grayr0ot/sh-farmrun-player-service:prod
-    hostname: farmrun-player-service
+    hostname: player-service
     networks:
        - default
        - sh_prod-minecraft-private
