@@ -4,7 +4,7 @@ services:
     image: ghcr.io/grayr0ot/sh-farmrun-player-service:prod
     hostname: farmrun-player-service
     networks:
-       - traefik-public
+       - default
        - sh_prod-minecraft-private
        - sh_prod-eureka-private
     secrets:
