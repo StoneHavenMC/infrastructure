@@ -6,7 +6,7 @@ services:
     networks:
        - default
        - sh_prod-minecraft-private
-       - sh_prod-eurekaprivate
+       - sh_prod-eureka-private
     secrets:
      -
       source: sh_prod-mongo-database-config.yml
