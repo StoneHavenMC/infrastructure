@@ -8,7 +8,7 @@ services:
       eureka_private:
     secrets:
      -
-       source: jsh_prod-jwt-public-key
+       source: sh_prod-jwt-public-key
        target: jwt-public-key
      - 
        source: sh_prod-jwt-private-key
