@@ -1,0 +1,40 @@
+version: '3.3'
+services:
+  grpc:
+    image: ghcr.io/grayr0ot/sh-farmrun-player-service:prod
+    hostname: farmrun-player-service
+    networks:
+       - traefik-public
+       - sh_prod-minecraft-private
+       - sh_prod-eureka-private
+    secrets:
+     -
+      source: sh_prod-mongo-database-config.yml
+      target: mongo_database_config.yml
+     -
+      source: sh_prod-grpc-config.yml
+      target: grpc_config.yml
+    logging:
+      driver: json-file
+    deploy:
+      replicas: 1
+      resources:
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+        limits:
+          cpus: '1.0'
+          memory: 512M
+
+networks:
+  default:
+  sh_prod-minecraft-private:
+    external: true
+  sh_prod-eureka-private:
+    external: true
+
+secrets:
+  sh_prod-grpc-config.yml:
+    external: true
+  sh_prod-mongo-database-config.yml:
+    external: true
