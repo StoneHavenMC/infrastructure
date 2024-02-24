@@ -12,7 +12,7 @@ services:
       source: sh_prod-mongo-database-config.yml
       target: mongo_database_config.yml
      -
-      source: sh_prod-mongo-database-config.yml
+      source: sh_prod-grpc-config.yml
       target: grpc_config.yml
     logging:
       driver: json-file
@@ -32,7 +32,7 @@ networks:
   sh_prod-eureka-private:
     external: true
 secrets:
-  sh_prod-mongo-database-config.yml:
+  sh_prod-grpc-config.yml:
     external: true
   sh_prod-mongo-database-config.yml:
     external: true
