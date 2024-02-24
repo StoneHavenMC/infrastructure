@@ -1,0 +1,48 @@
+version: '3.3'
+services:
+  grpc:
+    image: ghcr.io/grayr0ot/sh-farmrun-item-service:prod
+    networks:
+      - traefik-public
+      - minecraft_private
+      - eureka_private
+    hostname: farmrun-item-service
+    secrets:
+     -
+      source: mongo_database_config.yml
+      target: mongo_database_config.yml
+     -
+      source: grpc_config
+      target: grpc_config.yml
+    logging:
+      driver: json-file
+    deploy:
+      replicas: 1
+      labels:
+        traefik.http.routers.sh_prod-farmrun-item-service-http.tls.certresolver: cf
+        traefik.http.services.sh_prod-farmrun-item-service-http.loadbalancer.server.port: '8080'
+        traefik.http.routers.sh_prod-farmrun-item-service-http.tls: 'true'
+        traefik.http.routers.sh_prod-farmrun-item-service-http.rule: Host(`$DOMAIN`)
+        traefik.http.routers.sh_prod-farmrun-item-service-http.entrypoints: https
+        traefik.constraint-label: traefik-public
+        traefik.docker.network: traefik-public
+        traefik.enable: 'true'
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 512M
+        limits:
+          cpus: '2.0'
+          memory: 1024M
+networks:
+  traefik-public:
+    external: true
+  sh_prod-minecraft-private:
+    external: true
+  sh_prod-eureka-private:
+    external: true
+secrets:
+  sh_prod-mongo-database-config.yml:
+    external: true
+  sh_prod-grpc-config:
+    external: true
