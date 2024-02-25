@@ -1,34 +1,5 @@
 version: '3.3'
 services:
-  postgres:
-    image: postgres:15
-    environment:
-      POSTGRES_DB: stonehaven_staging
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
-      POSTGRES_USER_FILE: /run/secrets/postgres_user
-    ports:
-      - 5432:5432
-    command: postgres -c 'max_connections=200'
-    volumes:
-      - postgres:/var/lib/postgresql/data
-    networks:
-      - host
-    secrets:
-      - postgres_password
-      - postgres_user
-    logging:
-      driver: json-file
-    deploy:
-      placement:
-        constraints:
-          - node.labels.database.node == true
-      resources:
-        reservations:
-          cpus: '2.0'
-          memory: 4096M
-        limits:
-          cpus: '4.0'
-          memory: 8192M
   mongodb:
     image: mongo
     environment:
@@ -51,44 +22,16 @@ services:
           - node.labels.database.node == true
       resources:
         reservations:
-          cpus: '2.0'
-          memory: 4096M
+          cpus: '1.0'
+          memory: 1024M
         limits:
-          cpus: '4.0'
-          memory: 8192M
-  prometheus:
-    image: prom/prometheus
-    ports:
-      - 9090:9090
-    volumes:
-      - prometheus:/etc/prometheus
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --web.config.file=/etc/prometheus/web.yml
-  postgres-reporting:
-    image: bitnami/postgres-exporter
-    ports:
-      - 9187:9187
-    environment:
-      - DATA_SOURCE_URI=database-staging.stonehaven.fr/postgres?sslmode=disable
-      - DATA_SOURCE_USER_FILE=/run/secrets/postgres_user
-      - DATA_SOURCE_PASS_FILE=/run/secrets/postgres_password
-    secrets:
-      - postgres_password
-      - postgres_user
+          cpus: '2.0'
+          memory: 2048M
 networks:
   host:
 volumes:
-  postgres:
-    driver: local
   mongodb:
     driver: local
-  prometheus:
-    driver: local
 secrets:
-  postgres_password:
-    external: true
-  postgres_user:
-    external: true
   mongodb_password:
     external: true
