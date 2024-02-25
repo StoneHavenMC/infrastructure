@@ -10,8 +10,8 @@ services:
      - jwt-public-key
      - jwt-private-key
      -
-      source: spring_database_config
-      target: database_config.yml
+      source: mongo_database_config.yml
+      target: mongo_database_config.yml
     logging:
       driver: json-file
     deploy:
@@ -25,7 +25,7 @@ services:
           memory: 1024M
 
 secrets:
-  spring_database_config:
+  mongo_database_config.yml:
     external: true
   jwt-public-key:
     external: true
