@@ -4,6 +4,7 @@ services:
     image: ghcr.io/grayr0ot/sh-farmrun-item-service:dev
     networks:
       - sh_staging
+      - host
     hostname: farmrun-item-service
     secrets:
      -
@@ -24,6 +25,7 @@ services:
           cpus: '2.0'
           memory: 1024M
 networks:
+  host:
   sh_staging:
     external: true
 secrets:
