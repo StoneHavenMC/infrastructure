@@ -33,6 +33,8 @@ services:
       USER_NAME: root
     networks:
       - eureka_private
+    ports:
+      - 50022:22
     secrets:
       - sh_staging-ssh-password
     logging:
