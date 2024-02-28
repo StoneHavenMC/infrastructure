@@ -4,9 +4,8 @@ services:
     image: ghcr.io/grayr0ot/sh-farmrun-player-service:prod
     hostname: farmrun-player-service
     networks:
-       - default
-       - sh_prod-minecraft-private
-       - sh_prod-eureka-private
+       - host
+       - sh_prod
     secrets:
      -
       source: sh_prod-mongo-database-config.yml
@@ -27,10 +26,8 @@ services:
           memory: 512M
 
 networks:
-  default:
-  sh_prod-minecraft-private:
-    external: true
-  sh_prod-eureka-private:
+  host:
+  sh_prod:
     external: true
 
 secrets:
