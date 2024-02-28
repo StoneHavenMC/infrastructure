@@ -4,7 +4,7 @@ services:
     image: ghcr.io/grayr0ot/sh-authentication-service:dev
     hostname: authentication-service
     networks:
-      eureka_private:
+      sh_staging:
     secrets:
      - jwt-public-key
      - jwt-private-key
@@ -32,5 +32,5 @@ secrets:
     external: true
 
 networks:
-  eureka_private:
+  sh_staging:
     external: true
