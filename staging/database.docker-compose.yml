@@ -33,6 +33,7 @@ services:
       USER_NAME: root
     networks:
       - eureka_private
+      - host
     ports:
       - 50022:22
     secrets:
