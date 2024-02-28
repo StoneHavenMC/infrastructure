@@ -3,7 +3,7 @@ services:
   grpc:
     image: ghcr.io/grayr0ot/sh-server-service:prod
     networks:
-      - sh_prod-minecraft-private
+      - sh_prod
     hostname: server-service
     secrets:
       -
@@ -21,8 +21,7 @@ services:
           cpus: '0.5'
           memory: 512M
 networks:
-  default:
-  sh_prod-minecraft-private:
+  sh_prod:
     external: true
 secrets:
   sh_prod-grpc-config.yml:
