@@ -4,7 +4,7 @@ services:
     image: ghcr.io/grayr0ot/sh-service-registry:prod
     hostname: service-registry
     networks:
-      sh_prod-eureka-private:
+      sh_prod:
     logging:
       driver: json-file
     deploy:
@@ -17,5 +17,5 @@ services:
           cpus: '0.5'
           memory: 1024M
 networks:
-  sh_prod-eureka-private:
+  sh_prod:
     external: true
