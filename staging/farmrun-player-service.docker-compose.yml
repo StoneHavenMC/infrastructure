@@ -2,11 +2,8 @@ version: '3.3'
 services:
   grpc:
     image: ghcr.io/grayr0ot/sh-farmrun-player-service:dev
-    ports:
-      - 9093:9090
     hostname: farmrun-player-service
     networks:
-       - traefik-public
        - minecraft_private
        - eureka_private
     secrets:
@@ -47,8 +44,6 @@ services:
           memory: 512M
 
 networks:
-  traefik-public:
-    external: true
   minecraft_private:
     external: true
   eureka_private:
