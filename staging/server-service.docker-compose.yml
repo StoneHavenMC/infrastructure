@@ -3,9 +3,7 @@ services:
   grpc:
     image: ghcr.io/grayr0ot/sh-server-service:dev
     ports:
-      - 9091:9090
     networks:
-      - traefik-public
       - minecraft_private
     hostname: server-service
     secrets:
@@ -35,8 +33,6 @@ services:
           cpus: '1.0'
           memory: 512M
 networks:
-  traefik-public:
-    external: true
   minecraft_private:
     external: true
 secrets:
