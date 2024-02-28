@@ -8,8 +8,6 @@ services:
       MONGO_INITDB_DATABASE: staging
     volumes:
       - mongodb:/data/db
-    networks:
-      - eureka_private
     secrets:
       - mongodb_password
     logging:
@@ -32,7 +30,6 @@ services:
       PASSWORD_ACCESS: "true"
       USER_NAME: stonehaven
     networks:
-      - eureka_private
       - host
     ports:
       - 50022:2222
@@ -51,8 +48,6 @@ services:
      
 networks:
   host:
-  eureka_private:
-    external: true
 volumes:
   mongodb:
     driver: local
