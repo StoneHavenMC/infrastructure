@@ -3,7 +3,7 @@ services:
   grpc:
     image: ghcr.io/grayr0ot/sh-player-service:dev
     networks:
-      - minecraft_private
+      - sh_staging
     hostname: player-service
     secrets:
       -
@@ -35,7 +35,7 @@ services:
           cpus: '1.0'
           memory: 512M
 networks:
-  minecraft_private:
+  sh_staging:
     external: true
 secrets:
   mongo_database_config.yml:
