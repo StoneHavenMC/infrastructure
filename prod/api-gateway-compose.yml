@@ -14,7 +14,7 @@ services:
         traefik.http.routers.sh_prod-api-gateway-http.tls.certresolver: cf
         traefik.http.services.sh_prod-api-gateway-http.loadbalancer.server.port: '8080'
         traefik.http.routers.sh_prod-api-gateway-http.tls: 'true'
-        traefik.http.routers.sh_prod-api-gateway-http.rule: Host(`$DOMAIN`)
+        traefik.http.routers.sh_prod-api-gateway-http.rule: Host(`api-prod.stonehaven.fr`)
         traefik.http.routers.sh_prod-api-gateway-http.entrypoints: https
         traefik.constraint-label: traefik-public
         traefik.docker.network: traefik-public
