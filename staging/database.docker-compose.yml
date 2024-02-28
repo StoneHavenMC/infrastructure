@@ -36,7 +36,7 @@ services:
       - host
       - sh_staging
     volumes:
-      - ssh-server:/etc/ssh
+      - ssh-server:/config
     ports:
       - 50022:2222
     secrets:
