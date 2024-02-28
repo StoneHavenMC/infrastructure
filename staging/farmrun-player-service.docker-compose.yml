@@ -4,8 +4,7 @@ services:
     image: ghcr.io/grayr0ot/sh-farmrun-player-service:dev
     hostname: farmrun-player-service
     networks:
-       - minecraft_private
-       - eureka_private
+       - sh_staging
     secrets:
      -
       source: mongo_database_config.yml
@@ -44,9 +43,7 @@ services:
           memory: 512M
 
 networks:
-  minecraft_private:
-    external: true
-  eureka_private:
+  sh_staging:
     external: true
 
 secrets:
