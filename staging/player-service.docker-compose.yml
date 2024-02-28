@@ -7,7 +7,7 @@ services:
     hostname: player-service
     secrets:
       -
-        source: mongo_database_config.yml
+        source: sh_staging-mongo-database-config.yml
         target: mongo_database_config.yml
       -
         source: grpc_config
@@ -16,17 +16,6 @@ services:
       driver: json-file
     deploy:
       replicas: 1
-      labels:
-        traefik.http.routers.player-service-grpc.tls: 'true'
-        traefik.http.routers.player-service-grpc.rule: Host(`$DOMAIN`)
-        traefik.http.middlewares.player-service-grpc.grpcweb.allowOrigins: '*'
-        traefik.http.routers.player-service-grpc.tls.certresolver: cf
-        traefik.http.routers.player-service-grpc.entrypoints: https
-        traefik.http.services.player-service-grpc.loadbalancer.server.port: '9090'
-        traefik.http.services.player-service-grpc.loadbalancer.server.scheme: h2c
-        traefik.constraint-label: traefik-public
-        traefik.docker.network: traefik-public
-        traefik.enable: 'true'
       resources:
         reservations:
           cpus: '0.5'
@@ -38,7 +27,7 @@ networks:
   sh_staging:
     external: true
 secrets:
-  mongo_database_config.yml:
+  sh_staging-mongo-database-config.yml:
     external: true
   grpc_config:
     external: true
