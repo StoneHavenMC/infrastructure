@@ -7,7 +7,7 @@ services:
     hostname: farmrun-item-service
     secrets:
      -
-      source: mongo_database_config.yml
+      source: sh_staging-mongo-database-config.yml
       target: mongo_database_config.yml
      -
       source: grpc_config
@@ -16,24 +16,6 @@ services:
       driver: json-file
     deploy:
       replicas: 1
-      labels:
-        traefik.http.routers.farmrun-item-service-http.tls.certresolver: cf
-        traefik.http.services.farmrun-item-service-grpc.loadbalancer.server.scheme: h2c
-        traefik.http.middlewares.farmrun-item-service-grpc.grpcweb.allowOrigins: '*'
-        traefik.http.routers.farmrun-item-service-http.service: farmrun-item-service-http
-        traefik.http.routers.farmrun-item-service-grpc.tls: 'true'
-        traefik.http.routers.farmrun-item-service-grpc.rule: Host(`farmrun-item-services-staging.stonehaven.fr`)
-        traefik.http.routers.farmrun-item-service-grpc.entrypoints: https
-        traefik.http.services.farmrun-item-service-http.loadbalancer.server.port: '8080'
-        traefik.http.routers.farmrun-item-service-http.tls: 'true'
-        traefik.http.services.farmrun-item-service-grpc.loadbalancer.server.port: '9090'
-        traefik.http.routers.farmrun-item-service-http.rule: Host(`$DOMAIN`)
-        traefik.http.routers.farmrun-item-service-http.entrypoints: https
-        traefik.constraint-label: traefik-public
-        traefik.http.routers.farmrun-item-service-grpc.service: farmrun-item-service-grpc
-        traefik.docker.network: traefik-public
-        traefik.enable: 'true'
-        traefik.http.routers.farmrun-item-service-grpc.tls.certresolver: cf
       resources:
         reservations:
           cpus: '1.0'
@@ -45,7 +27,7 @@ networks:
   sh_staging:
     external: true
 secrets:
-  mongo_database_config.yml:
+  sh_staging-mongo-database-config.yml:
     external: true
   grpc_config:
     external: true
