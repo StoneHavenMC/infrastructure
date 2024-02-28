@@ -2,10 +2,7 @@ version: '3.3'
 services:
   grpc:
     image: ghcr.io/grayr0ot/sh-farmrun-item-service:dev
-    ports:
-      - 9094:9090
     networks:
-      - traefik-public
       - minecraft_private
       - eureka_private
     hostname: farmrun-item-service
@@ -46,8 +43,6 @@ services:
           cpus: '2.0'
           memory: 1024M
 networks:
-  traefik-public:
-    external: true
   minecraft_private:
     external: true
   eureka_private:
