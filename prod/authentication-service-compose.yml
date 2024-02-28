@@ -4,8 +4,7 @@ services:
     image: ghcr.io/grayr0ot/sh-authentication-service:prod
     hostname: authentication-service
     networks:
-      default:
-      sh_prod-eureka-private:
+      sh_prod:
     secrets:
      -
        source: sh_prod-jwt-public-key
@@ -37,6 +36,5 @@ secrets:
     external: true
 
 networks:
-  default:
-  sh_prod-eureka-private:
+  sh_prod:
     external: true
