@@ -34,6 +34,7 @@ services:
       USER_NAME: stonehaven
     networks:
       - host
+      - sh_staging
     ports:
       - 50022:2222
     secrets:
