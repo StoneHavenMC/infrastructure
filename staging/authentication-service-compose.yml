@@ -9,7 +9,7 @@ services:
      - jwt-public-key
      - jwt-private-key
      -
-      source: mongo_database_config.yml
+      source: sh_staging-mongo-database-config.yml
       target: mongo_database_config.yml
     logging:
       driver: json-file
@@ -24,7 +24,7 @@ services:
           memory: 1024M
 
 secrets:
-  mongo_database_config.yml:
+  sh_staging-mongo-database-config.yml:
     external: true
   jwt-public-key:
     external: true
