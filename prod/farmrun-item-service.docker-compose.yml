@@ -4,7 +4,7 @@ services:
     image: ghcr.io/grayr0ot/sh-farmrun-item-service:prod
     hostname: farmrun-item-service
     networks:
-      - default
+      - host
       - sh_prod
     secrets:
      -
@@ -25,7 +25,7 @@ services:
           cpus: '0.5'
           memory: 1024M
 networks:
-  default:
+  host:
   sh_prod:
     external: true
 secrets:
