@@ -35,7 +35,7 @@ services:
       - eureka_private
       - host
     ports:
-      - 50022:22
+      - 50022:2222
     secrets:
       - sh_staging-ssh-password
     logging:
