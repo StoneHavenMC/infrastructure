@@ -30,7 +30,7 @@ services:
     environment:
       USER_PASSWORD_FILE: /run/secrets/sh_staging-ssh-password
       PASSWORD_ACCESS: "true"
-      SUDO_ACCESS: true
+      SUDO_ACCESS: "true"
       USER_NAME: root
     networks:
       - eureka_private
