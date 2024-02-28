@@ -3,8 +3,7 @@ services:
   grpc:
     image: ghcr.io/grayr0ot/sh-farmrun-item-service:dev
     networks:
-      - minecraft_private
-      - eureka_private
+      - sh_staging
     hostname: farmrun-item-service
     secrets:
      -
@@ -43,9 +42,7 @@ services:
           cpus: '2.0'
           memory: 1024M
 networks:
-  minecraft_private:
-    external: true
-  eureka_private:
+  sh_staging:
     external: true
 secrets:
   mongo_database_config.yml:
