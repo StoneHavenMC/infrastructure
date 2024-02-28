@@ -8,9 +8,12 @@ services:
       MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/sh_staging-mongodb-password
       MONGO_INITDB_DATABASE: staging
     networks:
+      - host
       - sh_staging
     volumes:
       - mongodb:/data/db
+    ports:
+      - 57017:27017
     secrets:
       - sh_staging-mongodb-password
     logging:
@@ -26,31 +29,6 @@ services:
         limits:
           cpus: '2.0'
           memory: 2048M
-  ssh-server:
-    image: lscr.io/linuxserver/openssh-server:latest
-    environment:
-      USER_PASSWORD_FILE: /run/secrets/sh_staging-ssh-password
-      PASSWORD_ACCESS: "true"
-      USER_NAME: stonehaven
-    networks:
-      - host
-      - sh_staging
-    volumes:
-      - sshserver:/config
-    ports:
-      - 50022:2222
-    secrets:
-      - sh_staging-ssh-password
-    logging:
-      driver: json-file
-    deploy:
-      resources:
-        reservations:
-          cpus: '0.25'
-          memory: 128M
-        limits:
-          cpus: '0.25'
-          memory: 256M
      
 networks:
   host:
@@ -58,8 +36,6 @@ networks:
     external: true
 volumes:
   mongodb:
-    driver: local
-  sshserver:
     driver: local
 secrets:
   sh_staging-mongodb-password:
