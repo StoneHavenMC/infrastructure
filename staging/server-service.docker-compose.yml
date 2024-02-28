@@ -2,7 +2,6 @@ version: '3.3'
 services:
   grpc:
     image: ghcr.io/grayr0ot/sh-server-service:dev
-    ports:
     networks:
       - minecraft_private
     hostname: server-service
