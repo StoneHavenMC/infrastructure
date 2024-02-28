@@ -3,7 +3,7 @@ services:
   grpc:
     image: ghcr.io/grayr0ot/sh-server-service:dev
     networks:
-      - minecraft_private
+      - sh_staging
     hostname: server-service
     secrets:
       -
@@ -32,7 +32,7 @@ services:
           cpus: '1.0'
           memory: 512M
 networks:
-  minecraft_private:
+  sh_staging:
     external: true
 secrets:
   grpc_config:
