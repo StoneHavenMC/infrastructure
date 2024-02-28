@@ -50,6 +50,7 @@ services:
           memory: 256M
      
 networks:
+  host:
   eureka_private:
     external: true
 volumes:
