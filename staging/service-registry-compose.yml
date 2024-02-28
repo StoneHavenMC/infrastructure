@@ -4,7 +4,7 @@ services:
     image: ghcr.io/grayr0ot/sh-service-registry:dev
     hostname: service-registry
     networks:
-      eureka_private:
+      sh_staging:
     logging:
       driver: json-file
     deploy:
@@ -17,5 +17,5 @@ services:
           cpus: '2.0'
           memory: 1024M
 networks:
-  eureka_private:
+  sh_staging:
     external: true
