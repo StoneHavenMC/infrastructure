@@ -5,8 +5,7 @@ services:
     hostname: farmrun-item-service
     networks:
       - default
-      - sh_prod-minecraft-private
-      - sh_prod-eureka-private
+      - sh_prod
     secrets:
      -
       source: sh_prod-mongo-database-config.yml
@@ -27,9 +26,7 @@ services:
           memory: 1024M
 networks:
   default:
-  sh_prod-minecraft-private:
-    external: true
-  sh_prod-eureka-private:
+  sh_prod:
     external: true
 secrets:
   sh_prod-grpc-config.yml:
