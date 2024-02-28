@@ -35,6 +35,8 @@ services:
     networks:
       - host
       - sh_staging
+    volumes:
+      ssh-server:/etc/ssh
     ports:
       - 50022:2222
     secrets:
@@ -56,6 +58,8 @@ networks:
     external: true
 volumes:
   mongodb:
+    driver: local
+  ssh-server:
     driver: local
 secrets:
   sh_staging-mongodb-password:
