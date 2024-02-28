@@ -7,6 +7,8 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/sh_staging-mongodb-password
       MONGO_INITDB_DATABASE: staging
+    networks:
+      - sh_staging
     volumes:
       - mongodb:/data/db
     secrets:
@@ -49,6 +51,8 @@ services:
      
 networks:
   host:
+  sh_staging:
+    external: true
 volumes:
   mongodb:
     driver: local
