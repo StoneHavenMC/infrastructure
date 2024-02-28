@@ -12,6 +12,7 @@ services:
       - mongodb:/data/db
     networks:
       - host
+      - sh_prod
     secrets:
       - sh_prod-mongodb-password
     logging:
@@ -29,6 +30,8 @@ services:
           memory: 8192M
 networks:
   host:
+  sh_prod:
+    external: true
 volumes:
   mongodb:
     driver: local
