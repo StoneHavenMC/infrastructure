@@ -4,12 +4,12 @@ services:
     image: mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/mongodb_password
+      MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/sh_staging-mongodb-password
       MONGO_INITDB_DATABASE: staging
     volumes:
       - mongodb:/data/db
     secrets:
-      - mongodb_password
+      - sh_staging-mongodb-password
     logging:
       driver: json-file
     deploy:
@@ -52,7 +52,7 @@ volumes:
   mongodb:
     driver: local
 secrets:
-  mongodb_password:
+  sh_staging-mongodb-password:
     external: true
   sh_staging-ssh-password:
     external: true
