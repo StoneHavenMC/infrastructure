@@ -13,17 +13,6 @@ services:
       driver: json-file
     deploy:
       replicas: 1
-      labels:
-        traefik.http.routers.server-service-grpc.tls: 'true'
-        traefik.http.services.server-service-grpc.loadbalancer.server.scheme: h2c
-        traefik.http.middlewares.server-service-grpc.grpcweb.allowOrigins: '*'
-        traefik.http.routers.server-service-grpc.rule: Host(`$DOMAIN`)
-        traefik.constraint-label: traefik-public
-        traefik.http.routers.server-service-grpc.entrypoints: https
-        traefik.http.routers.server-service-grpc.tls.certresolver: cf
-        traefik.http.services.server-service-grpc.loadbalancer.server.port: '9090'
-        traefik.docker.network: traefik-public
-        traefik.enable: 'true'
       resources:
         reservations:
           cpus: '0.5'
