@@ -6,12 +6,10 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/mongodb_password
       MONGO_INITDB_DATABASE: staging
-    ports:
-      - 27017:27017
     volumes:
       - mongodb:/data/db
     networks:
-      - host
+      - eureka_private
     secrets:
       - mongodb_password
     logging:
@@ -27,11 +25,35 @@ services:
         limits:
           cpus: '2.0'
           memory: 2048M
+  ssh-server:
+    image: lscr.io/linuxserver/openssh-server:latest
+    environment:
+      USER_PASSWORD_FILE: /run/secrets/sh_staging-ssh-password
+      PASSWORD_ACCESS: true
+    networks:
+      - eureka_private
+    secrets:
+      - sh_staging-ssh-password
+    logging:
+      driver: json-file
+    deploy:
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+        limits:
+          cpus: '0.25'
+          memory: 256M
+     
 networks:
-  host:
+  eureka_private:
+    external: true
 volumes:
   mongodb:
     driver: local
 secrets:
   mongodb_password:
     external: true
+  sh_staging-ssh-password:
+    external: true
+
