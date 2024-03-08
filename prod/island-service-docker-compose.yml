@@ -1,0 +1,39 @@
+version: '3.3'
+services:
+  grpc:
+    image: ghcr.io/grayr0ot/sh-island-service:prod
+    hostname: island-service
+    networks:
+      - sh_prod
+    secrets:
+     -
+      source: sh_prod-mongo-database-config.yml
+      target: mongo_database_config.yml
+     -
+      source: sh_prod-redis-database-config.yml
+      target: redis_database_config.yml
+     -
+      source: sh_prod-grpc-config.yml
+      target: grpc_config.yml
+    logging:
+      driver: json-file
+    deploy:
+      replicas: 1
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+        limits:
+          cpus: '0.5'
+          memory: 1024M
+networks:
+  host:
+  sh_prod:
+    external: true
+secrets:
+  sh_prod-grpc-config.yml:
+    external: true
+  sh_prod-mongo-database-config.yml:
+    external: true
+  sh_prod-redis-database-config.yml:
+    external: true
