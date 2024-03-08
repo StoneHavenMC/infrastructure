@@ -13,7 +13,7 @@ services:
       source: sh_staging-redis-database-config.yml
       target: redis_database_config.yml
      -
-      source: grpc-config.yml
+      source: sh_staging-grpc_config
       target: grpc_config.yml
     logging:
       driver: json-file
@@ -31,7 +31,7 @@ networks:
   sh_prod:
     external: true
 secrets:
-  grpc-config.yml:
+  sh_staging-grpc_config:
     external: true
   sh_staging-mongo-database-config.yml:
     external: true
