@@ -29,6 +29,24 @@ services:
         limits:
           cpus: '4.0'
           memory: 8192M
+  redis:
+    image: redis
+    hostname: sh_prod-database-redis
+    networks:
+      - sh_prod
+    logging:
+      driver: json-file
+    deploy:
+      placement:
+        constraints:
+          - node.labels.database.node == true
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+        limits:
+          cpus: '0.5'
+          memory: 512M
 networks:
   host:
   sh_prod:
