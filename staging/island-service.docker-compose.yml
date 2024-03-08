@@ -28,7 +28,7 @@ services:
           memory: 1024M
 networks:
   host:
-  sh_prod:
+  sh_staging:
     external: true
 secrets:
   sh_staging-grpc_config.yml:
