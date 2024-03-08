@@ -11,7 +11,7 @@ services:
       source: sh_staging-mongo-database-config.yml
       target: mongo_database_config.yml
      -
-      source: grpc_config
+      source: sh_staging-grpc_config
       target: grpc_config.yml
     logging:
       driver: json-file
@@ -31,5 +31,5 @@ networks:
 secrets:
   sh_staging-mongo-database-config.yml:
     external: true
-  grpc_config:
+  sh_staging-grpc_config:
     external: true
