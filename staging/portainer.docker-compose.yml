@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   agent:
-    image: portainer/agent:2.19.1
+    image: portainer/agent:sts
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes:/var/lib/docker/volumes
@@ -15,7 +15,7 @@ services:
         constraints:
           - node.labels.portainer.node == true
   portainer:
-    image: portainer/portainer-ee:2.19.1
+    image: portainer/portainer-ee:sts
     command:
       - -H
       - tcp://tasks.agent:9001
