@@ -21,10 +21,10 @@ services:
       replicas: 1
       resources:
         reservations:
-          cpus: '0.25'
+          cpus: '0.5'
           memory: 512M
         limits:
-          cpus: '0.5'
+          cpus: '1'
           memory: 1024M
 networks:
   host:
