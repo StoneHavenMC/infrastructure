@@ -3,6 +3,8 @@ services:
   grpc:
     image: ghcr.io/grayr0ot/sh-island-service:prod
     hostname: island-service
+    environment:
+      - ISLAND_SERVER_GROUP=sh_prod_island
     networks:
       - sh_prod
     secrets:
