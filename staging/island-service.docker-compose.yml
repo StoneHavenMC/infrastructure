@@ -4,7 +4,7 @@ services:
     image: ghcr.io/grayr0ot/sh-island-service:dev
     hostname: island-service
     environment:
-      - ISLAND_SERVER_GROUP=sh_staging_island
+      - ISLAND_SERVER_GROUP=island_group
     networks:
       - sh_staging
     secrets:
