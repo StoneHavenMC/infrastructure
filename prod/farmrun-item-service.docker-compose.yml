@@ -6,6 +6,8 @@ services:
     networks:
       - host
       - sh_prod
+    environment:
+      PUBLIC_PATH: https://api.stonehaven.fr
     secrets:
      -
       source: sh_prod-mongo-database-config.yml
