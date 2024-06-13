@@ -6,6 +6,8 @@ services:
       - sh_staging
       - host
     hostname: farmrun-item-service
+    environment:
+      PUBLIC_PATH: https://api-staging.stonehaven.fr
     secrets:
      -
       source: sh_staging-mongo-database-config.yml
