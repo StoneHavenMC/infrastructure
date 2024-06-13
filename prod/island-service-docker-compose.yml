@@ -4,7 +4,8 @@ services:
     image: ghcr.io/grayr0ot/sh-island-service:prod
     hostname: island-service
     environment:
-      - ISLAND_SERVER_GROUP=island_group
+      ISLAND_SERVER_GROUP: island_group
+      PUBLIC_PATH: https://api.stonehaven.fr
     networks:
       - sh_prod
     secrets:
