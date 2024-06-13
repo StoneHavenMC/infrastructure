@@ -7,6 +7,8 @@ services:
       - ISLAND_SERVER_GROUP=island_group
     networks:
       - sh_staging
+    environment:
+      PUBLIC_PATH: https://api-staging.stonehaven.fr
     secrets:
      -
       source: sh_staging-mongo-database-config.yml
