@@ -2,30 +2,33 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: stonehaven-staging
-  name: dashboard
+  name: api-gateway
   labels:
     environment: staging
-    app: dashboard
+    app: api-gateway
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dashboard
+      app: api-gateway
   template:
     metadata:
-      name: dashboard
+      name: api-gateway
       labels:
-        app: dashboard
+        app: api-gateway
     spec:
       containers:
-        - name: dashboard
-          image: ghcr.io/grayr0ot/sh-dashboard:dev
+        - name: api-gateway
+          image: ghcr.io/grayr0ot/sh-api-gateway:dev
           imagePullPolicy: Always
           resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
             limits:
-              memory: "128Mi"
-              cpu: "200m"
+              memory: "512Mi"
+              cpu: "500m"
           ports:
-            - containerPort: 80
+            - containerPort: 8080
               protocol: TCP
       restartPolicy: Always

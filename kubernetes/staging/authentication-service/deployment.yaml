@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: stonehaven-staging
+  name: authentication-service
+  labels:
+    environment: staging
+    app: authentication-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authentication-service
+  template:
+    metadata:
+      name: authentication-service
+      labels:
+        app: authentication-service
+    spec:
+      containers:
+        - name: authentication-service
+          image: ghcr.io/grayr0ot/sh-authentication-service:dev
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - name: authentication-service
+              mountPath: /config
+      restartPolicy: Always
+      volumes:
+        - name: authentication-service
+          secret:
+            secretName: authentication-service
