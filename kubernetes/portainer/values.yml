@@ -21,7 +21,7 @@ imagePullSecrets: []
 
 # Set master node
 nodeSelector:
-  kubernetes.io/hostname: staging.stonehaven.fr
+  kubernetes.io/hostname: ubuntu-2204-jammy-amd64-base
 
 serviceAccount:
   annotations: {}
