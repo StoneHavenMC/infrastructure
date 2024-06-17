@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: stonehaven-staging
+  name: farmrun-item-service
+  labels:
+    environment: staging
+    app: farmrun-item-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: farmrun-item-service
+  template:
+    metadata:
+      name: farmrun-item-service
+      labels:
+        app: farmrun-item-service
+    spec:
+      containers:
+        - name: farmrun-item-service
+          image: ghcr.io/grayr0ot/sh-farmrun-item-service:dev
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          env:
+            - name: PUBLIC_PATH
+              value: https://api-staging.stonehaven.fr
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - name: farmrun-item-service
+              mountPath: /config
+      restartPolicy: Always
+      volumes:
+        - name: farmrun-item-service
+          secret:
+            secretName: farmrun-item-service

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: stonehaven-staging
+  name: user-service
+  labels:
+    environment: staging
+    app: user-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      name: user-service
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: ghcr.io/grayr0ot/sh-user-service:dev
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          env:
+            - name: PUBLIC_PATH
+              value: https://api-staging.stonehaven.fr
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - name: user-service
+              mountPath: /config
+      restartPolicy: Always
+      volumes:
+        - name: user-service
+          secret:
+            secretName: user-service

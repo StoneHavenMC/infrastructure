@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: stonehaven-staging
+  name: farmrun-player-service
+  labels:
+    environment: staging
+    app: farmrun-player-service
+spec:
+  selector:
+    app: farmrun-player-service
+  type: ClusterIP
+  ports:
+    - name: farmrun-player-service
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  
