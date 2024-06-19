@@ -2,24 +2,24 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: stonehaven-staging
-  name: farmrun-player-service
+  name: farmrun-island-service
   labels:
     environment: staging
-    app: farmrun-player-service
+    app: farmrun-island-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: farmrun-player-service
+      app: farmrun-island-service
   template:
     metadata:
-      name: farmrun-player-service
+      name: farmrun-island-service
       labels:
-        app: farmrun-player-service
+        app: farmrun-island-service
     spec:
       containers:
-        - name: farmrun-player-service
-          image: ghcr.io/grayr0ot/sh-farmrun-player-service:dev
+        - name: farmrun-island-service
+          image: ghcr.io/grayr0ot/sh-farmrun-island-service:dev
           imagePullPolicy: Always
           resources:
             requests:
@@ -35,10 +35,10 @@ spec:
             - containerPort: 8080
               protocol: TCP
           volumeMounts:
-            - name: farmrun-player-service
+            - name: farmrun-island-service
               mountPath: /config
       restartPolicy: Always
       volumes:
-        - name: farmrun-player-service
+        - name: farmrun-island-service
           secret:
-            secretName: farmrun-player-service
+            secretName: farmrun-island-service
