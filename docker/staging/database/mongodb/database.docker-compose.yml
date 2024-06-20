@@ -6,9 +6,6 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       # MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/sh_staging-mongodb-password
       MONGO_INITDB_DATABASE: staging
-    networks:
-      - host
-      - sh_staging
     volumes:
       - /home/stonehaven/staging/database/mongodb:/data/db
     ports:
