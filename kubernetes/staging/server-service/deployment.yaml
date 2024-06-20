@@ -2,24 +2,24 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: stonehaven-staging
-  name: player-service
+  name: server-service
   labels:
     environment: staging
-    app: player-service
+    app: server-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: player-service
+      app: server-service
   template:
     metadata:
-      name: player-service
+      name: server-service
       labels:
-        app: player-service
+        app: server-service
     spec:
       containers:
-        - name: player-service
-          image: ghcr.io/grayr0ot/sh-player-service:dev
+        - name: server-service
+          image: ghcr.io/grayr0ot/sh-server-service:dev
           imagePullPolicy: Always
           resources:
             requests:
@@ -28,17 +28,14 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
-          env:
-            - name: PUBLIC_PATH
-              value: https://api-staging.stonehaven.fr
           ports:
-            - containerPort: 8080
+            - containerPort: 9090
               protocol: TCP
           volumeMounts:
-            - name: player-service
+            - name: server-service
               mountPath: /config
       restartPolicy: Always
       volumes:
-        - name: player-service
+        - name: server-service
           secret:
-            secretName: player-service
+            secretName: server-service
