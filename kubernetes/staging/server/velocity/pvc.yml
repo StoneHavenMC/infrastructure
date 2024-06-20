@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: stonehaven-staging
+  name: velocity-pvc
+spec:
+  storageClassName: velocity-pv
+  accessModes: [ ReadWriteOnce ]
+  resources: {
+    requests: {
+      storage: 10Gi
+    }
+  }

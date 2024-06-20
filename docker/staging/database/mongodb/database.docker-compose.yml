@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+  mongodb:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      # MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/sh_staging-mongodb-password
+      MONGO_INITDB_DATABASE: staging
+    networks:
+      - host
+      - sh_staging
+    volumes:
+      - /home/stonehaven/staging/database/mongodb:/data/db
+    ports:
+      - 57017:27017
+    logging:
+      driver: json-file
+    deploy:
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 1024M
+        limits:
+          cpus: '2.0'
+          memory: 2048M

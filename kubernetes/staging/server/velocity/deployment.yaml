@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: stonehaven-staging
+  name: velocity
+  labels:
+    environment: staging
+    app: velocity
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: velocity
+  template:
+    metadata:
+      name: velocity
+      labels:
+        app: velocity
+    spec:
+      nodeSelector:
+          kubernetes.io/hostname: ubuntu-2204-jammy-amd64-base
+      containers:
+        - name: velocity
+          image: itzg/mc-proxy:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 25565
+              protocol: TCP
+          volumeMounts:
+            - name: velocity-pv
+              mountPath: /server
+          env:
+            - name: TYPE
+              value: VELOCITY
+            - name: UID
+              value: "1000"
+            - name: GID
+              value: "1000"
+            - name: TZ
+              value: Europe/Paris
+            - name: GRPC_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: velocity
+                  key: grpc-api-key
+            - name: HUB_SERVER_TYPE
+              value: hub
+            - name: DISABLE_HEALTHCHECK
+              value: "true"
+            - name: HEALTH_USE_PROXY
+              value: "true"
+      restartPolicy: Always
+      volumes:
+        - name: velocity-pv
+          persistentVolumeClaim:
+            claimName: velocity-pvc

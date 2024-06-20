@@ -38,7 +38,7 @@ global:
 nameOverride: ""
 ## @param fullnameOverride String to fully override mongodb.fullname template
 ##
-fullnameOverride: "staging-database-mongodb"
+fullnameOverride: ""
 ## @param namespaceOverride String to fully override common.names.namespace
 ##
 namespaceOverride: ""
@@ -822,7 +822,7 @@ service:
 externalAccess:
   ## @param externalAccess.enabled Enable Kubernetes external cluster access to MongoDB(&reg;) nodes (only for replicaset architecture)
   ##
-  enabled: false
+  enabled: true
   ## External IPs auto-discovery configuration
   ## An init container is used to auto-detect LB IPs or node ports by querying the K8s API
   ## Note: RBAC might be required
@@ -830,7 +830,7 @@ externalAccess:
   autoDiscovery:
     ## @param externalAccess.autoDiscovery.enabled Enable using an init container to auto-detect external IPs by querying the K8s API
     ##
-    enabled: false
+    enabled: true
     ## Bitnami Kubectl image
     ## ref: https://hub.docker.com/r/bitnami/kubectl/tags/
     ## @param externalAccess.autoDiscovery.image.registry [default: REGISTRY_NAME] Init container auto-discovery image registry
@@ -943,14 +943,14 @@ externalAccess:
   service:
     ## @param externalAccess.service.type Kubernetes Service type for external access. Allowed values: NodePort, LoadBalancer or ClusterIP
     ##
-    type: LoadBalancer
+    type: NodePort
     ## @param externalAccess.service.portName MongoDB(&reg;) port name used for external access when service type is LoadBalancer
     ##
     portName: "mongodb"
     ## @param externalAccess.service.ports.mongodb MongoDB(&reg;) port used for external access when service type is LoadBalancer
     ##
     ports:
-      mongodb: 27017
+      mongodb: 30017
     ## @param externalAccess.service.loadBalancerIPs Array of load balancer IPs for MongoDB(&reg;) nodes
     ## Example:
     ## loadBalancerIPs:
@@ -1164,7 +1164,7 @@ persistence:
   enabled: true
   ## @param persistence.name Name of the PVC and mounted volume
   ##
-  name: "database-mongodb-pvc"
+  #name: "database-mongodb-pvc"
   ## @param persistence.medium Provide a medium for `emptyDir` volumes.
   ## Requires persistence.enabled: false
   ##
@@ -1174,17 +1174,17 @@ persistence:
   ## If defined, PVC must be created manually before volume will be bound
   ## Ignored when mongodb.architecture=replicaset
   ##
-  existingClaim: "database-mongodb-pvc"
+  #existingClaim: "database-mongodb-pvc"
   ## @param persistence.resourcePolicy Setting it to "keep" to avoid removing PVCs during a helm delete operation. Leaving it empty will delete PVCs after the chart deleted
   ##
-  resourcePolicy: ""
+  resourcePolicy: "keep"
   ## @param persistence.storageClass PVC Storage Class for MongoDB(&reg;) data volume
   ## If defined, storageClassName: <storageClass>
   ## If set to "-", storageClassName: "", which disables dynamic provisioning
   ## If undefined (the default) or set to null, no storageClassName spec is
   ## set, choosing the default provisioner.
   ##
-  storageClass: "microk8s.io/hostpath"
+  #storageClass: "microk8s.io/hostpath"
   ## @param persistence.accessModes PV Access Mode
   ##
   accessModes:

@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: stonehaven-staging
+  name: hub
+  labels:
+    environment: staging
+    app: hub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hub
+  template:
+    metadata:
+      name: hub
+      labels:
+        app: hub
+    spec:
+      nodeSelector:
+          kubernetes.io/hostname: ubuntu-2204-jammy-amd64-base
+      containers:
+        - name: hub
+          image: itzg/minecraft-server:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1024Mi"
+              cpu: "1"
+          ports:
+            - containerPort: 25565
+              protocol: TCP
+          volumeMounts:
+            - name: hub-pv
+              mountPath: /data
+          env:
+            - name: TYPE
+              value: PAPER
+            - name: VERSION
+              value: 1.20.6
+            - name: EULA
+              value: "true"
+            - name: UID
+              value: "1000"
+            - name: GID
+              value: "1000"
+            - name: TZ
+              value: Europe/Paris
+            - name: DISABLE_HEALTHCHECK
+              value: "true"
+            - name: HEALTH_USE_PROXY
+              value: "true"
+            - name: GRPC_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: hub
+                  key: grpc-api-key
+            - name: REDIS_HOSTNAME
+              valueFrom:
+                secretKeyRef:
+                  name: hub
+                  key: redis-hostname
+            - name: REDIS_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: hub
+                  key: redis-port
+            - name: REDIS_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: hub
+                  key: redis-username
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hub
+                  key: redis-password
+            - name: HUB_SERVER_TYPE
+              value: hub
+            - name: SERVER_GROUP
+              value: hub
+      restartPolicy: Always
+      volumes:
+        - name: hub-pv
+          persistentVolumeClaim:
+            claimName: hub-pvc

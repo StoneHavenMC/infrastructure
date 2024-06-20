@@ -75,7 +75,7 @@ nameResolutionTimeout: 5
 diagnosticMode:
   ## @param diagnosticMode.enabled Enable diagnostic mode (all probes will be disabled and the command will be overridden)
   ##
-  enabled: true
+  enabled: false
   ## @param diagnosticMode.command Command to override all containers in the deployment
   ##
   command:
@@ -124,7 +124,7 @@ image:
 
 ## @param architecture Redis&reg; architecture. Allowed values: `standalone` or `replication`
 ##
-architecture: replication
+architecture: standalone
 ## Redis&reg; Authentication parameters
 ## ref: https://github.com/bitnami/containers/tree/main/bitnami/redis#setting-the-server-password-on-first-run
 ##
@@ -532,7 +532,7 @@ master:
   service:
     ## @param master.service.type Redis&reg; master service type
     ##
-    type: ClusterIP
+    type: NodePort
     ## @param master.service.portNames.redis Redis&reg; master service port name
     ##
     portNames:
@@ -546,7 +546,7 @@ master:
     ## NOTE: choose port between <30000-32767>
     ##
     nodePorts:
-      redis: ""
+      redis: "30379"
     ## @param master.service.externalTrafficPolicy Redis&reg; master service external traffic policy
     ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
     ##
