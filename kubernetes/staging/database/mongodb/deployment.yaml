@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: stonehaven-staging
+  name: database-mongodb
+  labels:
+    environment: staging
+    app: database-mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database-mongodb
+  template:
+    metadata:
+      name: database-mongodb
+      labels:
+        app: database-mongodb
+    spec:
+      containers:
+        - name: database-mongodb
+          image: mongo
+          imagePullPolicy: Always
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: database-mongodb
+                  key: username
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-mongodb
+                  key: password
+            - name: MONGO_INITDB_DATABASE
+              value: staging
+          resources:
+            limits:
+              memory: "1024Mi"
+              cpu: "1"
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+          ports:
+            - containerPort: 27017
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /data/db
+              name: database-mongodb
+      restartPolicy: Always
+      volumes:
+        - name: database-mongodb
+          persistentVolumeClaim:
+            claimName: database-mongodb
