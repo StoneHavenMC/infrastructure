@@ -2,26 +2,26 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   namespace: stonehaven-staging
-  name: farmrun-spawn
+  name: farmrun-mines
   labels:
     environment: staging
-    app: farmrun-spawn
+    app: farmrun-mines
 spec:
-  serviceName: farmrun-spawn
+  serviceName: farmrun-mines
   replicas: 1
   selector:
     matchLabels:
-      app: farmrun-spawn
+      app: farmrun-mines
   template:
     metadata:
-      name: farmrun-spawn
+      name: farmrun-mines
       labels:
-        app: farmrun-spawn
+        app: farmrun-mines
     spec:
       nodeSelector:
           kubernetes.io/hostname: ubuntu-2204-jammy-amd64-base
       containers:
-        - name: farmrun-spawn
+        - name: farmrun-mines
           image: itzg/minecraft-server:latest
           imagePullPolicy: Always
           resources:
@@ -35,7 +35,7 @@ spec:
             - containerPort: 25565
               protocol: TCP
           volumeMounts:
-            - name: farmrun-spawn
+            - name: farmrun-mines
               mountPath: /data
           env:
             - name: TYPE
@@ -59,32 +59,32 @@ spec:
             - name: REDIS_HOSTNAME
               valueFrom:
                 secretKeyRef:
-                  name: farmrun-spawn
+                  name: farmrun-mines
                   key: redis-hostname
             - name: REDIS_PORT
               valueFrom:
                 secretKeyRef:
-                  name: farmrun-spawn
+                  name: farmrun-mines
                   key: redis-port
             - name: REDIS_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: farmrun-spawn
+                  name: farmrun-mines
                   key: redis-username
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: farmrun-spawn
+                  name: farmrun-mines
                   key: redis-password
             - name: GRPC_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: farmrun-spawn
+                  name: farmrun-mines
                   key: grpc-api-key
             - name: HUB_SERVER_GROUP
               value: hub
             - name: SERVER_GROUP
-              value: spawn
+              value: mine
             - name: FARMRUN_SPAWN_SERVER_GROUP
               value: spawn
             - name: FARMRUN_GARDEN_SERVER_GROUP
@@ -93,6 +93,6 @@ spec:
               value: mine
       restartPolicy: Always
       volumes:
-        - name: farmrun-spawn
+        - name: farmrun-mines
           persistentVolumeClaim:
-            claimName: farmrun-spawn
+            claimName: farmrun-mines
