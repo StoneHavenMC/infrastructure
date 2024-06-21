@@ -11,8 +11,12 @@ spec:
     app: farmrun-item-service
   type: ClusterIP
   ports:
-    - name: farmrun-item-service
+    - name: farmrun-item-service-http
       protocol: TCP
       port: 8080
-      targetPort: 8080
+      targetPort: http
+    - name: farmrun-item-service-grpc
+      protocol: TCP
+      port: 9090
+      targetPort: grpc
   

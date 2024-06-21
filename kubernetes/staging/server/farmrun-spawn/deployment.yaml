@@ -2,40 +2,40 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   namespace: stonehaven-staging
-  name: hub
+  name: farmrun-spawn
   labels:
     environment: staging
-    app: hub
+    app: farmrun-spawn
 spec:
-  serviceName: hub
+  serviceName: farmrun-spawn
   replicas: 1
   selector:
     matchLabels:
-      app: hub
+      app: farmrun-spawn
   template:
     metadata:
-      name: hub
+      name: farmrun-spawn
       labels:
-        app: hub
+        app: farmrun-spawn
     spec:
       nodeSelector:
           kubernetes.io/hostname: ubuntu-2204-jammy-amd64-base
       containers:
-        - name: hub
+        - name: farmrun-spawn
           image: itzg/minecraft-server:latest
           imagePullPolicy: Always
           resources:
             requests:
-              memory: "512Mi"
-              cpu: "500m"
-            limits:
               memory: "1024Mi"
               cpu: "1"
+            limits:
+              memory: "2048Mi"
+              cpu: "2"
           ports:
             - containerPort: 25565
               protocol: TCP
           volumeMounts:
-            - name: hub-pv
+            - name: farmrun-spawn
               mountPath: /data
           env:
             - name: TYPE
@@ -59,34 +59,34 @@ spec:
             - name: REDIS_HOSTNAME
               valueFrom:
                 secretKeyRef:
-                  name: hub
+                  name: farmrun-spawn
                   key: redis-hostname
             - name: REDIS_PORT
               valueFrom:
                 secretKeyRef:
-                  name: hub
+                  name: farmrun-spawn
                   key: redis-port
             - name: REDIS_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: hub
+                  name: farmrun-spawn
                   key: redis-username
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: hub
+                  name: farmrun-spawn
                   key: redis-password
             - name: GRPC_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: hub
+                  name: farmrun-spawn
                   key: grpc-api-key
             - name: HUB_SERVER_GROUP
               value: hub
             - name: SERVER_GROUP
-              value: hub
+              value: spawn
       restartPolicy: Always
       volumes:
-        - name: hub-pv
+        - name: farmrun-spawn
           persistentVolumeClaim:
-            claimName: hub-pvc
+            claimName: farmrun-spawn

@@ -45,17 +45,17 @@ spec:
               value: "1000"
             - name: TZ
               value: Europe/Paris
+            - name: DISABLE_HEALTHCHECK
+              value: "true"
+            - name: HEALTH_USE_PROXY
+              value: "true"
             - name: GRPC_API_KEY
               valueFrom:
                 secretKeyRef:
                   name: velocity
                   key: grpc-api-key
-            - name: HUB_SERVER_TYPE
+            - name: HUB_SERVER_GROUP
               value: hub
-            - name: DISABLE_HEALTHCHECK
-              value: "true"
-            - name: HEALTH_USE_PROXY
-              value: "true"
       restartPolicy: Always
       volumes:
         - name: velocity-pv

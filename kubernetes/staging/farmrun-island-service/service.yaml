@@ -11,8 +11,11 @@ spec:
     app: farmrun-island-service
   type: ClusterIP
   ports:
-    - name: farmrun-island-service
+    - name: farmrun-island-service-http
       protocol: TCP
       port: 8080
-      targetPort: 8080
-  
+      targetPort: http
+    - name: farmrun-island-service-grpc
+      protocol: TCP
+      port: 9090
+      targetPort: grpc
