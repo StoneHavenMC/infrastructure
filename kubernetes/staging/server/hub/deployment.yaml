@@ -22,14 +22,19 @@ spec:
           kubernetes.io/hostname: ubuntu-2204-jammy-amd64-base
       containers:
         - name: hub
-          image: itzg/minecraft-server:latest
+          image: amazoncorretto:21
+          command:
+            - "java"
+            - "-jar"
+            - "paper-1.21-25.jar"
+          workingDir: /data
           imagePullPolicy: Always
           resources:
             requests:
               memory: "512Mi"
-              cpu: "500m"
+              cpu: "0.5"
             limits:
-              memory: "1024Mi"
+              memory: "2048Mi"
               cpu: "1"
           ports:
             - containerPort: 25565
@@ -40,8 +45,10 @@ spec:
           env:
             - name: TYPE
               value: PAPER
+            - name: PAPER_CHANNEL
+              value: experimental
             - name: VERSION
-              value: 1.20.6
+              value: "1.21"
             - name: EULA
               value: "true"
             - name: UID
@@ -51,8 +58,6 @@ spec:
             - name: TZ
               value: Europe/Paris
             - name: DISABLE_HEALTHCHECK
-              value: "true"
-            - name: HEALTH_USE_PROXY
               value: "true"
             - name: ENABLE_RCON
               value: "false"
@@ -85,6 +90,12 @@ spec:
               value: hub
             - name: SERVER_GROUP
               value: hub
+          startupProbe:
+            tcpSocket:
+              port: 25565
+            failureThreshold: 30
+            periodSeconds: 300
+
       restartPolicy: Always
       volumes:
         - name: hub-pv

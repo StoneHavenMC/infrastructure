@@ -40,8 +40,10 @@ spec:
           env:
             - name: TYPE
               value: PAPER
+            - name: PAPER_CHANNEL
+              value: experimental
             - name: VERSION
-              value: 1.20.6
+              value: "1.21"
             - name: EULA
               value: "true"
             - name: UID
