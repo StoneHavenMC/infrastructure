@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: stonehaven-staging
+  name: database-postgres
+spec:
+  storageClassName: database-postgres
+  accessModes: [ ReadWriteOnce ]
+  resources: {
+    requests: {
+      storage: 10Gi
+    }
+  }
